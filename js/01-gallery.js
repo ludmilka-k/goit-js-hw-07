@@ -8,7 +8,6 @@ const cardsMarkup = createGalleryItemCardMarkup(galleryItems);
 
 galleryContainer.insertAdjacentHTML('beforeend', cardsMarkup);
 galleryContainer.addEventListener('click', onGalleryContainerClick);
-let closeModal;
 
 function createGalleryItemCardMarkup(galleryItems) {
     return galleryItems.map(({preview, original, description}) => {
@@ -43,18 +42,18 @@ function onGalleryContainerClick(evn) {
     `,
     {
         onShow: (instance) => {
-            closeModal = (evn) => {
-                if (evn.code === 'Escape') {
-                    console.log(instance)
-                    instance.close();
-                }
-            }
             window.addEventListener('keydown', closeModal)
         },
         onClose: (instance) => {
             window.removeEventListener('keydown', closeModal)
         }
     })
+    function closeModal(evn) {
+        if (evn.code === 'Escape') {
+            console.log(instance)
+            instance.close();
+        }
+    }
 
     instance.show()
 }
